@@ -5,7 +5,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 def fetch_with_requests(url):
-    """Fetch page with requests. Returns HTML string or None."""
     try:
         response = requests.get(url , timeout=10)
         response.raise_for_status()
@@ -15,7 +14,6 @@ def fetch_with_requests(url):
         return None
     
 def fetch_with_selenium(url):
-    """Fetch page with Selenium. Returns HTML string or None."""
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--disable-gpu")
@@ -30,13 +28,6 @@ def fetch_with_selenium(url):
         driver.quit()
 
 def scrape_site(url, parse_function, site_name, max_jobs=15):
-    """
-    Scrape a site using the smart fallback approach:
-    1. Try requests first
-    2. Parse and check if jobs found
-    3. If no jobs, retry with Selenium
-    4. Return list of job dicts
-    """
     print(f'\nscraping {site_name} site')
     html = fetch_with_requests(url)
     

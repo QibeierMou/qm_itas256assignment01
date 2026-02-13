@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 
 def parse_jobbank_jobs(soup, max_jobs=15):
-    """Parse Job Bank Canada HTML and return list of job dicts."""
     jobs = []
 
     job_cards = soup.find_all('article', class_='resultJobItem')[:max_jobs]
@@ -22,7 +21,6 @@ def parse_jobbank_jobs(soup, max_jobs=15):
 
 
 def parse_indeed_jobs(soup, max_jobs=15):
-    """Parse Indeed Canada HTML and return list of job dicts."""
     jobs = []
 
     job_cards = soup.find_all("div", class_="job_seen_beacon")[:max_jobs]
