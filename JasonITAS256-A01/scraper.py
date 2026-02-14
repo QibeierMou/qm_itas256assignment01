@@ -37,8 +37,6 @@ def scrape_site(url, parse_function, site_name, max_jobs=15):
         if jobs:
             print(f'{site_name}: scraped using requests')
 
-    print(f"{site_name}: falling back to Selenium")
-
     html = fetch_with_selenium(url)
     soup = BeautifulSoup(html, "lxml")
     return parse_function(soup, max_jobs)

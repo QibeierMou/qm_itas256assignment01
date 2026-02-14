@@ -36,7 +36,7 @@ def normalize_location(location):
         
         return f"{city}, {province}"
     
-    return location.title()
+    return location.strip()
 
 
 def normalize_job(job):

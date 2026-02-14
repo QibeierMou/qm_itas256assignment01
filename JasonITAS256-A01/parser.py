@@ -1,42 +1,57 @@
 from bs4 import BeautifulSoup
 
 def parse_jobbank_jobs(soup, max_jobs=15):
+
     jobs = []
 
-    job_cards = soup.find_all('article', class_='resultJobItem')[:max_jobs]
+    cards = soup.find_all("a", class_="resultJobItem")
 
-    for card in job_cards:
-        title_tag = card.find("a", class_="resultJobItemTitle")
-        company_tag = card.find("div", class_="employerName")
-        location_tag = card.find("div", class_="location")
+    for card in cards[:max_jobs]:
+
+        title_tag = card.find("span", class_="noctitle")
+        title = title_tag.text.strip() if title_tag else ""
+
+        company_tag = card.find("li", class_="business")
+        company = company_tag.text.strip() if company_tag else ""
+
+        location_tag = card.find("li", class_="location")
+        location = location_tag.text.strip() if location_tag else ""
 
         job = {
-            "title": title_tag.get_text(strip=True) if title_tag else"",
-            "company": company_tag.get_text(strip=True) if company_tag else"",
-            "location": location_tag.get_text(strip=True) if location_tag else"",
-            "source": "Job Bank Canada"
+            "title": title,
+            "company": company,
+            "location": location,
+            "source": "Job Bank"
         }
+
         jobs.append(job)
-    return jobs 
+
+    print("Job Bank jobs found:", len(jobs))
+    return jobs
 
 
 def parse_indeed_jobs(soup, max_jobs=15):
     jobs = []
 
-    job_cards = soup.find_all("div", class_="job_seen_beacon")[:max_jobs]
+    job_cards = soup.find_all("td", class_="resultContent")
 
-    for card in job_cards:
+    for card in job_cards[:max_jobs]:
         title_tag = card.find("h2", class_="jobTitle")
-        company_tag = card.find("span", class_="companyName")
-        location_tag = card.find("div", class_="companyLocation")
+        title = title_tag.get_text(strip=True) if title_tag else ""
+
+        company_tag = card.find("div", class_="company-Name")
+        company = company_tag.get_text(strip=True) if company_tag else ""
+        location_tag = card.find("div", class_="text-Location")
+        location = location_tag.get_text(strip=True) if location_tag else ""
 
         job = {
-            "title": title_tag.get_text(strip=True) if title_tag else "",
-            "company": company_tag.get_text(strip=True) if company_tag else "",
-            "location": location_tag.get_text(strip=True) if location_tag else "",
+            "title": title,
+            "company": company,
+            "location": location,
             "source": "Indeed"
         }
 
         jobs.append(job)
 
+    print("Indeed jobs found:", len(jobs))
     return jobs
