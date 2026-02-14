@@ -16,7 +16,8 @@ def main():
 
     print(f"\nTotal jobs collected: {len(processed_jobs)}")
     print("This is for educational purposes only.")
-    print("This is a assigment for ITAS256 at Vancouver Island University.")
+    print("Assist with ChatGPT to learn web scraping and debugging.")
+    print("This is an assignment for ITAS256 at Vancouver Island University.")
     print("Student: Jason Mou")
 
 
